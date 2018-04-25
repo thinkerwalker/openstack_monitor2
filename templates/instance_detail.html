@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>detail</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/static/js/jquery.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/detail.css">
+
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+</head>
+<body class="gray-bg">
+	<div class="container">
+		<div class="row " >
+		<div class="col-lg-12 col-md-12 col-sm-12" style="">
+				<h1 class="biaoti" >{{ instance_detail.name }}</h1>
+	            <table class="table table-striped">
+	            <tr>
+		            <th>cpus</th>
+		            <th>内存</th>
+		            <th>磁盘</th>
+		            <th>IP</th>
+                    <th>状态</th>
+                    <th>宿主机</th>
+		            <th>实例类型</th>
+		            <th>使用镜像</th>
+	            </tr>
+	            <tr>
+	            	<td>{{ instance_detail.vcpus }}</td>
+		            <td>{{ instance_detail.mem_total }}</td>
+		            <td>{{ instance_detail.disk_size }}</td>
+		            <td>{{ instance_detail.IP }}</td>
+		            <td>{{ instance_detail.status }}</td>
+		            <td>{{ instance_detail.hypervisor_host }}</td>
+		            <td>{{ instance_detail.flavor_type }}</td>
+		            <td>{{ instance_detail.image_name }}</td>
+	            </tr>
+	            </table>
+		</div>
+		</div>
+
+        <div class="row">
+            <button type="button" value="刷新" class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11" id="refresh" style="color:#FFFFFF;background-color: #1ab394;width:30px;height: 20px">refresh</button>
+        </div>
+		<div class="row">
+		 	<div class="col-lg-4  col-md-4" >
+	              		<div style="height: 300px;" id="cpu_percentage">
+						 
+	              		</div>
+
+		 	</div>
+		 	<div class="col-lg-8  col-md-8 " >
+	              		<div style="height: 300px;" id="disk_util">
+
+	              		</div>
+
+		 	</div>
+
+		 	<div class="col-lg-4  col-md-4 " >
+	              		<div style="height: 300px;" id="mem_percentage">
+
+	             		 </div>
+
+		 	</div>
+		 	<div class="col-lg-8  col-md-8" >
+	              		<div style="height: 300px;"" id="mem_utils">
+
+	             		 </div>
+		 	</div>	
+		 	<div class="col-lg-6  col-md-6" >
+	              		<div style="height: 300px;" id="net_info">
+
+	             		 </div>
+		 	</div>	
+		 	<div class="col-lg-6  col-md-6" >
+	              		<div style="height: 300px;" id="disk_info">
+
+	             		 </div>
+		 	</div>	
+	    </div>
+	</div>
+</body>
+<script>
+	var cpu_util_value;
+        var mem_util_value;
+
+</script>
+<!-- //echarts for cpu_percentage -->
+    <script type="text/javascript">
+		
+	</script>
+	<!-- echarts for mem_percentage -->
+	 <script type="text/javascript">
+    	//echarts for cpu_percentage
+	
+	</script>
+	 <script type="text/javascript">
+			
+       </script>
+<script type="text/javascript">
+
+
+    x_time=[];
+    mem_free_data_y=[];
+    net_y_up=[];
+    net_y_down=[];
+    disk_y_r=[];
+    disk_y_w=[];
+    disk_total=0;
+    disk_used=0;
+    $("#refresh").click(function () {
+        var instance_name='{{ instance_detail.instance_name }}';
+        var hypervisor_host='{{ instance_detail.hypervisor_host }}';
+        $.ajax({
+            url:"/instance_detail_ajax",
+                    type:"POST",
+                    data:{"instance_name":instance_name,"hypervisor_host":hypervisor_host},
+                    dataType:"json",
+                    async : false,
+                    success:function(arg) {
+                        console.log(arg.mem_info.mem_util);
+			var datay=[820, 932, 901, 934, 1290, 1330, 0];
+			cpu_util_value=arg.cpu_info.cpu_util.toFixed(0);
+			mem_util_value=arg.mem_info.mem_util.toFixed(0);
+			var datax=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+		//cpu_util charts
+		var cpu_util_dom = document.getElementById("cpu_percentage");
+		var cpu_util_chart = echarts.init(cpu_util_dom);
+		cpu_util_option = {
+		    tooltip : {
+		        formatter: "{a} <br/>{b} : {c}%"
+		    },
+		    toolbox: {
+		        feature: {
+		            restore: {},
+		            saveAsImage: {}
+		        }
+		    },
+		    series: [
+		        {
+		            name: 'cpu使用率',
+		            type: 'gauge',
+		            detail: {formatter:'{value}%'},
+		            data: [{value: cpu_util_value, name: 'cpu使用率'}]
+		        }
+		    ]
+		};
+		if (cpu_util_option && typeof cpu_util_option === "object") {
+		    	cpu_util_chart.setOption(cpu_util_option, true);
+		}
+		//disk_util
+		var disk_util_dom = document.getElementById("disk_util");
+		var disk_util_chart = echarts.init(disk_util_dom);
+		var used=arg.disk_info.used;
+		var unused=arg.disk_info.total-used;
+
+		disk_util_option = {
+    		title : {
+        		text: '磁盘-使用量比',
+        		subtext: '',
+        		x:'center'
+    		},
+    		tooltip : {
+        		trigger: 'item',
+        		formatter: "{a} <br/>{b} : {c} ({d}%)"
+    		},
+		legend: {
+       			 orient: 'vertical',
+        		 left: 'left',
+       			 data: ['使用','剩余']
+    		},
+   		 series : [
+        		{
+           		 name: '访问来源',
+            		type: 'pie',
+            		radius : '55%',
+            		center: ['50%', '60%'],
+            		data:[
+                		{value:used, name:'使用'},
+                		{value:unused, name:'未使用'},
+
+
+            		],
+            		itemStyle: {
+                		emphasis: {
+                    		shadowBlur: 10,
+                    		shadowOffsetX: 0,
+                    		shadowColor: 'rgba(0, 0, 0, 0.5)'
+                		}
+            		}
+        		}
+    		]
+		};
+		;
+		if (disk_util_option && typeof disk_util_option === "object") {
+  		disk_util_chart.setOption(disk_util_option, true);
+		}	
+
+		//mem_util_charts
+		var mem_util_dom = document.getElementById("mem_percentage");
+		var mem_util_chart = echarts.init(mem_util_dom);
+		window.mem_value=1;
+		mem_util_option = null;
+		mem_util_option = {
+		    tooltip : {
+		        formatter: "{a} <br/>{b} : {c}%"
+		    },
+		    toolbox: {
+		        feature: {
+		            restore: {},
+		            saveAsImage: {}
+		        }
+		    },
+		    series: [
+		        {
+		            name: 'mem使用率',
+		            type: 'gauge',
+		            detail: {formatter:'{value}%'},
+		            data: [{value:mem_util_value, name: 'mem使用率'}],
+		        }
+		    ]
+		};
+
+		if (mem_util_option && typeof mem_util_option === "object") {
+		    	mem_util_chart.setOption(mem_util_option, true);
+		}
+		//
+			var myDate = new Date();
+			var HH=myDate.getHours();
+			HH=checkTime(HH);
+			var MM=myDate.getMinutes();
+			MM=checkTime(MM);
+			var ss=myDate.getSeconds();
+			ss=checkTime(ss);
+			mytime=HH +':'+ MM + ":" + ss;
+			mem_free=arg.mem_info.mem_free;
+			x_time.push(mytime);
+			mem_free_data_y.push(mem_free);
+			if(x_time.length>7)
+			{
+				x_time=x_time.reverse();
+				x_time.pop();
+				x_time=x_time.reverse();
+			}
+			if(mem_free_data_y.length>7)
+			{
+				mem_free_data_y=mem_free_data_y.reverse();
+				mem_free_data_y.pop();
+				mem_free_data_y=mem_free_data_y.reverse();
+				alert(mem_free_data_y);
+			}
+			var mem_free_dom = document.getElementById("mem_utils");
+			var mem_free_chart = echarts.init(mem_free_dom);
+                    mem_free_option = {
+                        title: {
+                            text: '内存剩余量'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['邮件营销']
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: x_time
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [
+                            {
+                                name:'内存剩余量',
+                                type:'line',
+                                stack: '总量',
+                                data: mem_free_data_y
+                            },
+                           
+                        ]
+                    };
+                    ;
+                    if (mem_free_option && typeof mem_free_option === "object") {
+                        mem_free_chart.setOption(mem_free_option, true);
+                    }			
+		//net_info   
+			net_y_down.push(arg.net_info.down);
+			net_y_up.push(arg.net_info.up);
+			if(net_y_down.length>7)
+			{
+				net_y_down=net_y_down.reverse();
+				net_y_up=net_y_up.reverse();
+				net_y_down.pop();
+				net_y_up.pop();
+				net_y_down=net_y_down.reverse();
+				net_y_up=net_y_up.reverse();
+			}
+			var net_info_dom = document.getElementById("net_info");
+			var net_info_chart = echarts.init(net_info_dom);
+                    net_info_option = {
+                        title: {
+                            text: '网络进出速率b/s'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['up','down']
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: x_time
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [
+                            {
+                                name:'上行速率',
+                                type:'line',
+                                stack: '总量',
+                                data: net_y_up
+                            },
+                            {
+                                name:'下行速率',
+                                type:'line',
+                                stack: '总量',
+                                data: net_y_down
+                            },
+
+                        ]
+                    };
+                    ;
+                    if (net_info_option && typeof net_info_option === "object") {
+                        net_info_chart.setOption(net_info_option, true);
+	       }
+		//disk_info   
+			disk_y_r.push(arg.disk_info.read_v);
+			disk_y_w.push(arg.disk_info.write_v);
+			if(disk_y_r.length>7)
+			{
+				disk_y_r=disk_y_r.reverse();
+				disk_y_w=disk_y_w.reverse();
+				disk_y_r.pop();
+				disk_y_w.pop();
+				disk_y_r=disk_y_r.reverse();
+				disk_y_w=disk_y_w.reverse();
+			}
+			var disk_info_dom = document.getElementById("disk_info");
+			var disk_info_chart = echarts.init(disk_info_dom);
+                    disk_info_option = {
+                        title: {
+                            text: '磁盘IO速率b/s'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['up','down']
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: x_time
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [
+                            {
+                                name:'读速率',
+                                type:'line',
+                                stack: '总量',
+                                data: disk_y_r
+                            },
+                            {
+                                name:'写速率',
+                                type:'line',
+                                stack: '总量',
+                                data: disk_y_w
+                            },
+
+                        ]
+                    };
+                    ;
+                    if (disk_info_option && typeof disk_info_option === "object") {
+                        disk_info_chart.setOption(disk_info_option, true);
+                    }
+
+            }
+        });
+    });
+function checkTime(i)
+{
+if (i<10) 
+  {i="0" + i}
+  return i
+}
+</script>
+
+</html>

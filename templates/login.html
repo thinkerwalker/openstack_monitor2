@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache"> 
+<meta http-equiv="Expires" content="0"> 
+<title>openstack monitor后台管理</title>
+<link href="/static/css/login.css" rel="stylesheet" type="text/css" />
+<script src="/static/js/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="login_box">
+      <div class="login_l_img"><img src="/static/img/login-img.png" /></div>
+      <div class="login">
+          <div class="login_logo"><a href="#"><img src="/static/img/login_logo.png" /></a></div>
+          <div class="login_name">
+               <p></p>
+          </div>
+          <form>
+              <input name="username" id="username" type="text" placeholder="用户名" required="">
+
+{#              <span id="password_text" onclick="this.style.display='none';document.getElementById('password').style.display='block';document.getElementById('password').focus().select();" >密码</span>#}
+
+              <input name="password" id="password" type="password" id="password" placeholder="密码" required="" />
+              <input value="登录" style="width:100%;" type="button" id="submit">
+          </form>
+      </div>
+      <div class="copyright">openstack-monitor 版权所有©2018-2019</div>
+</div>
+<div style="text-align:center;">
+</div>
+<script type="text/javascript">
+    document.onkeydown = function(e){
+        if(!e) e = window.event;//火狐中是 window.event
+        if((e.keyCode || e.which) == 13){
+            document.getElementById("submit").click();
+        }
+    }
+
+</script>
+<script type="text/javascript">
+   $("#submit").click(function () {
+       var username=$("#username").val();
+       var password=$("#password").val();
+       $.ajax({
+                   url:"/login_ajax",
+                    type:"POST",
+                    data:{"username":username,"password":password},
+                    dataType:"json",
+                    async : true,
+                    success:function (arg) {
+                        console.log(arg.status);
+                       if (arg.status == 200) {
+                          window.location.href = "/index.html";
+                       }
+                       if (arg.status == "403") {
+                           alert("密码错误");
+                       }
+                       if (arg.status == "404") {
+                           alert("用户名不存在");
+                       }
+                    }
+       });
+  });
+</script>
+</body>
+</html>

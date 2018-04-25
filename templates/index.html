@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>openstack-monitor</title>
+
+    <meta name="keywords" content="openstack monitor based on libvirt">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span><img alt="image" class="img-circle" src="/static/img/profile_small.jpg" style="width:180px;height:auto;" /></span>
+                           
+                        </div>
+                        
+                    </li>
+                   
+					<li>
+                        <a class="J_menuItem" href="layouts.html"><i class="fa fa-home"></i> <span class="nav-label">设备总览</span></a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/instance_list"><i class="fa fa-columns"></i> <span class="nav-label">虚机列表</span></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span class="nav-label">用户管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="graph_echarts.html">个人信息</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="graph_flot.html">增删用户</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">消息</span><span class="label label-warning pull-right">16</span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="mailbox.html">历史问题</a>
+                            </li>
+                            <li><a class="J_menuItem" href="mail_detail.html">已发邮件</a>
+                            </li>
+                            <li><a class="J_menuItem" href="mail_compose.html">邮件通知</a>
+                            </li>
+                        </ul>
+                    </li>
+					 <li>
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span class="nav-label">关于</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="graph_echarts.html">作者信息</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="graph_flot.html">监控思路</a>
+                            </li>
+                        </ul>
+                    </li>
+					<li style=" border-top-style:dotted;">
+                        <a class="" href="/login_out.html"><i class="fa fa-columns"></i> <span class="nav-label">退出</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                       
+                    </div>
+   
+                </nav>
+            </div>
+            <div class="row content-tabs">
+                <button class="roll-nav roll-left J_tabLeft" onclick="javascript:history.go(-1);"><i class="fa fa-backward"></i>
+                </button>
+                <nav class="page-tabs J_menuTabs">
+                    <div class="page-tabs-content">
+                        <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+                    </div>
+                </nav>
+                <button class="roll-nav roll-right J_tabRight" onclick="javascript:history.forward();"><i class="fa fa-forward" ></i>
+                </button>
+                
+                <a href="login_out.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="http://www.walker123.cn" frameborder="0" data-id="index_v1.html" seamless></iframe>
+            </div>
+            <div class="footer">
+                <div class="pull-right">&copy; <a href="/" target="_blank">openstack monitor</a>
+                </div>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+        <!--右侧边栏开始-->
+            </div>
+        </div>
+        <!--右侧边栏结束-->
+      
+    </div>
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/static/js/plugins/layer/layer.min.js"></script>
+    <script src="/static/js/hplus.min.js?v=4.1.0"></script>
+    <script type="text/javascript" src="/static/js/contabs.min.js"></script>
+    <script src="/static/js/plugins/pace/pace.min.js"></script>
+	
+</body>
+</html>
