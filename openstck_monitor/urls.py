@@ -17,6 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from user_mgr import  views
 from user_mgr import  instance
+from user_mgr import hypervisor
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,7 +27,8 @@ urlpatterns = [
     url(r'^login_ajax$', views.login_ajax),
     url(r'^login_out.html$',views.login_out),
     url(r'^index', views.device_list),
-    url(r'^device_list/',views.device_list),
+    url(r'^hypervisor_list$',hypervisor.hypervisor_list),
+    url(r'^hypervisor_detail$',hypervisor.hypervisor_detail),
     url(r'user_info/',views.user_info),
     url(r'user_update/',views.user_update),
     url(r'^instance_detail$',instance.instance_detail),

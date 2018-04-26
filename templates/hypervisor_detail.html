@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算节点详细信息</title>
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/static/js/jquery.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/hypervisor_detail.css">
+</head>
+<body>
+	<div class="container">
+			<div class="row " >
+				<div class="col-lg-7 col-md-7 col-sm-7" style="">
+					<h1 class="biaoti" >{{ hypervisor.hypervisor_hostname }}</h1>
+		            <table class="table table-bordered" style="text-align: center;">
+                        <h3 >基本信息</h3>
+                        <tr>
+                            <th>主机名：</th>
+                            <td> {{ hypervisor.hypervisor_hostname }}</td>
+                        </tr>
+                        <tr>
+                            <th>主机IP：</th>
+                            <td> {{ hypervisor.host_ip }}</td>
+                        </tr>
+                        <tr>
+                            <th>主机状态：</th>
+                            <td> {{ hypervisor.state }}</td>
+                        </tr>
+                        <tr>
+                            <th>cpu个数：</th>
+                            <td> {{ hypervisor.vcpus }}</td>
+                        </tr>
+                        <tr>
+                            <th>cpu架构：</th>
+                            <td>{{ cpu_info.arch }}</td>
+                        </tr>
+			           <tr>
+                            <th>cpu厂商：</th>
+                            <td> {{ cpu_info.vendor }}</td>
+                        </tr>
+                        <tr>
+                            <th>总内存大小（MB）： </th>
+                            <td> {{ hypervisor.memory_mb }}</td>
+                        </tr>
+                        <tr>
+                            <th>剩余内存大小（MB）： </th>
+                            <td> {{ hypervisor.free_ram_mb }}</td>
+                        </tr>
+                        <tr>
+                            <th>磁盘大小（GB）：</th>
+                            <td> {{ hypervisor.local_gb }}</td>
+                        </tr>
+                        <tr>
+                            <th>磁盘剩余大小（GB）：</th>
+                            <td> {{ hypervisor.free_disk_gb }}</td>
+                        </tr>
+		            </table>
+
+                    <table class="table table-bordered" style="text-align: center;">
+                        <h3 >运行实例列表</h3>
+                        <tr>
+                            <th style="text-align: center">序号</th>
+                            <th style="text-align: center">实例名称</th>
+                        </tr>
+                         {% for instance in hy_instance_list.servers %}
+                             <tr>
+                                <td> {{ forloop.counter }}</td>
+                                <td>{{ instance.name }}</td>
+                             </tr>
+                        {% endfor %}
+		            </table>
+				</div>
+		</div>
+
+	</div>
+</body>
+</html>
