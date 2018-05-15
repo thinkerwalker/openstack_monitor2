@@ -5,9 +5,11 @@ from django.http import JsonResponse
 import requests
 import json
 
-def get_token():
+def get_token(os_project_name,username,password):
     content=common.glb_openstack()
-    print(content['OS_PASSWORD'])
+    content['OS_USERNAME']=username
+    content['OS_PASSWORD']=password
+    content['OS_PROJECT_NAME']=os_project_name
     headers = {
         'Content-Type': 'application/json',
     }
@@ -20,8 +22,7 @@ def get_token():
     if response.status_code == 201:
         return response.headers['X-Subject-Token']
     else:
-        print(response.text)
-        return
+        return 0
 
 def instance_list(request):
     content=common.glb_openstack()

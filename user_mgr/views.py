@@ -22,21 +22,14 @@ def login(request):
 def login_ajax(request):
     username=request.POST.get('username')
     password=request.POST.get('password')
-    # username='thinkerwalker@126.com'
-    # password='admin'
-    user=User.objects.get(username=username)
-    print("222")
-    if user is not None:
-        if user.password == password:
-            message={"status":200,"msg":"success"}
-            request.session['id'] = user.id
-            request.session['token']=instance.get_token()
-            print(request)
-        else:
-            message={"status":403,"msg":"password error"}
+    os_project_name=request.POST.get('os_project_name')
+    flag=instance.get_token(os_project_name,username,password)
+    if flag == 0:
+        message = {"status": 403, "msg": "password error"}
     else:
-        message = {"status": 404, "msg": "user does not exist"}
-    # return HttpResponse(json.dumps(message))
+        message = {"status": 200, "msg": "success"}
+        request.session['token'] = flag
+        request.session['id'] = flag
     return JsonResponse(message)
 
 #login_out would del session

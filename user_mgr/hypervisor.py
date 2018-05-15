@@ -13,13 +13,16 @@ def hypervisor_list(request):
     }
     response = requests.get('%s/os-hypervisors' % (content['OS_COMPUTE_API']), headers=headers)
     if response.status_code != 200:
-        print('获取失败')
-        try:
-            del request.session['id']
-            del request.session['token']
-        except KeyError:
-            pass
-        return render(request,'401.html')
+        if response.status_code == 403:
+            return render(request,'403.html')
+        else:
+            print(response.status_code)
+            try:
+                print('获取失败')
+                print('获取失败2')
+            except KeyError:
+                pass
+            return render(request,'401.html')
     else:
         hypervisor_list_obj=json.loads(response.text)
 

@@ -19,6 +19,7 @@
                <p></p>
           </div>
           <form>
+		<input name="os_project_name" id="os_project_name" type="text" placeholder="项目名称" required="">
               <input name="username" id="username" type="text" placeholder="用户名" required="">
 
 {#              <span id="password_text" onclick="this.style.display='none';document.getElementById('password').style.display='block';document.getElementById('password').focus().select();" >密码</span>#}
@@ -44,10 +45,11 @@
    $("#submit").click(function () {
        var username=$("#username").val();
        var password=$("#password").val();
+       var os_project_name=$("#os_project_name").val();
        $.ajax({
                    url:"/login_ajax",
                     type:"POST",
-                    data:{"username":username,"password":password},
+                    data:{"username":username,"password":password,"os_project_name":os_project_name},
                     dataType:"json",
                     async : true,
                     success:function (arg) {
