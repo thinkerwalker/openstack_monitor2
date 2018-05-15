@@ -50,7 +50,7 @@
 		</div>
 
         <div class="row">
-            <button type="button" value="刷新" class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11" id="refresh" style="color:#FFFFFF;background-color: #1ab394;width:30px;height: 20px">refresh</button>
+            <button type="button" value="刷新" class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11" id="refresh" style="color:#FFFFFF;background-color: #1ab394;width:60px;height: 30px">refresh</button>
         </div>
 		<div class="row">
 		 	<div class="col-lg-4  col-md-4" >
@@ -121,6 +121,12 @@
     $("#refresh").click(function () {
         var instance_name='{{ instance_detail.instance_name }}';
         var hypervisor_host='{{ instance_detail.hypervisor_host }}';
+	 var instance_status='{{ instance_detail.status }}';
+	 if(instance_status=='SHUTOFF')
+        {
+	    console.log("exit");
+            return;
+        }
         $.ajax({
             url:"/instance_detail_ajax",
                     type:"POST",
@@ -257,7 +263,6 @@
 				mem_free_data_y=mem_free_data_y.reverse();
 				mem_free_data_y.pop();
 				mem_free_data_y=mem_free_data_y.reverse();
-				alert(mem_free_data_y);
 			}
 			var mem_free_dom = document.getElementById("mem_utils");
 			var mem_free_chart = echarts.init(mem_free_dom);
@@ -441,5 +446,11 @@ if (i<10)
   return i
 }
 </script>
+<script>
+    var timer = setInterval(function() {
+        document.getElementById("refresh").click();
+        console.log("refresh");
+}, 5000);
 
+</script>
 </html>
