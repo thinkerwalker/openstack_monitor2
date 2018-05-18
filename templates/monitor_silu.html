@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>openstack monitor</title>
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6 col-md-3">
+				<h1>监控思路</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div style="font-size: 18px;font-family: Microsoft YaHei;text-indent: 36px;line-height: 30px;">
+					<p>
+						OpenStack 底层支持KVM虚拟化管理, 它通过Libvirt 来操作这些虚拟机. Libvirt 库是一种实现Linux  的Hypervisor功能的Linux API,因为实例就是在libvirt上面运行，因此调用libvirt api即可采集到运行的实例的性能数据。Libvirt在python中有libvirt-python模块，以实现python和libvirt的交互。
+					</p>
+					<p>
+						打开某实例的详细信息时候，在web页面利用ajax技术，每隔5s异步从后端请求数据，得到数据后，利用百度的echarts图表将其展示。
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+</html>
+

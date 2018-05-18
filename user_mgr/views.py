@@ -79,3 +79,9 @@ def influxdb_get_mem_usage(request):
     # message={"time":result.raw["series"][0]["values"][0][0],"value":result.raw["series"][0]["values"][0][1]}
     message={"value":30}
     return JsonResponse(message)
+
+def author_info(request):
+    return render(request,'author_info.html')
+
+def monitor_silu(request):
+    return render(request,'monitor_silu.html')
